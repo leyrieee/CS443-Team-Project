@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # CS443-Team-Project
 =======
 # catchafire
@@ -18,3 +19,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 >>>>>>> b85e4aa (Initial commit)
+=======
+# CS443-Team-Project
+>>>>>>> 19c3a0a (Initial commit)
