@@ -59,18 +59,33 @@ class SignUpVolunteerPage extends StatelessWidget {
               const SizedBox(height: 20),
               buildPrimaryButton('Sign Up', () {}),
 
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Already have an account?"),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Login'),
-                  ),
-                ],
+              const SizedBox(height: 20),
+
+              // Log-in Option with Clickable "Log in" Link
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Already have an account? ",
+                      style: TextStyle(fontFamily: "GT Ultra", fontSize: 12),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "Log in",
+                        style: TextStyle(
+                          fontFamily: "GT Ultra",
+                          fontSize: 12,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
