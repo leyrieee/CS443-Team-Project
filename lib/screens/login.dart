@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "../widgets.dart";
-import 'signup_organisation.dart';
-import 'signup_volunteer.dart';
+import 'signup.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -59,20 +58,17 @@ class LoginPage extends StatelessWidget {
             buildPrimaryButton('Login', () {}), // Login button
             const SizedBox(height: 20),
 
-            // Sign-Up Options
-            const Center(
-              child: Text("New to Catchafire? Sign up as:",
-                  style: TextStyle(fontFamily: "GT Ultra", fontSize: 12)),
-            ),
-            const SizedBox(height: 5),
-
-            // Sign-Up Buttons in Row
-            Row(
-              children: [
-                Expanded(
-                  child: buildSecondaryButton(
-                    'Volunteer',
-                    () {
+            // Sign-Up Option with Clickable "Sign up" Link
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "New to Catchafire? ",
+                    style: TextStyle(fontFamily: "GT Ultra", fontSize: 12),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -80,23 +76,18 @@ class LoginPage extends StatelessWidget {
                         ),
                       );
                     },
+                    child: const Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontFamily: "GT Ultra",
+                        fontSize: 12,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10), // Space between buttons
-                Expanded(
-                  child: buildSecondaryButton(
-                    'Organization',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignUpOrganisationPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
