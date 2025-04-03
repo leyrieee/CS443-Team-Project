@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "../widgets.dart";
+import "cause_skills.dart";
 
 class SignUpVolunteerPage extends StatelessWidget {
   const SignUpVolunteerPage({super.key});
@@ -57,7 +58,13 @@ class SignUpVolunteerPage extends StatelessWidget {
               buildTextField('Confirm Password', obscureText: true),
 
               const SizedBox(height: 20),
-              buildPrimaryButton('Sign Up', () {}),
+              buildPrimaryButton('Sign Up', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CauseAndSkillsPage()),
+                );
+              }),
+
 
               const SizedBox(height: 20),
 
