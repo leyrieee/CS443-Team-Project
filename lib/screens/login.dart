@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "../widgets.dart";
 import 'signup.dart';
 
 class LoginPage extends StatelessWidget {
@@ -8,7 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(244, 242, 230, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -36,7 +35,8 @@ class LoginPage extends StatelessWidget {
               'Log into your account',
               style: TextStyle(
                 fontSize: 14,
-                fontFamily: 'GT Ultra',
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.bold,
                 color: Colors.black54,
               ),
             ),
@@ -72,7 +72,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SignUpVolunteerPage(),
+                          builder: (context) => const SignUpPage(),
                         ),
                       );
                     },
@@ -90,6 +90,64 @@ class LoginPage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(String hint, {bool obscureText = false}) {
+    return TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(color: Color.fromRGBO(41, 37, 37, 1)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Color.fromRGBO(200, 196, 180, 1),
+      ),
+    );
+  }
+
+  Widget buildPrimaryButton(String text, VoidCallback onPressed) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: const BorderSide(color: Color(0xFF6FE6FF)),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+
+  Widget buildSecondaryButton(String text, VoidCallback onPressed) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          side: const BorderSide(color: Colors.black, width: 2),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
