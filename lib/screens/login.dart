@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'signup.dart';
+import 'home.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -55,7 +56,13 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            buildPrimaryButton('Login', () {}), // Login button
+            buildPrimaryButton('Login', () {
+              // Login button
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            }),
             const SizedBox(height: 20),
 
             // Sign-Up Option with Clickable "Sign up" Link
