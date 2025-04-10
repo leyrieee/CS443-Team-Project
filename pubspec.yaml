@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  smooth_page_indicator: ^1.2.1
 
   cupertino_icons: ^1.0.8
 
@@ -25,6 +26,10 @@ flutter:
   assets:
     - assets/fonts/
     - assets/logo.png 
+    - assets/onboarding1.png
+    - assets/onboarding2.png
+    - assets/onboarding3.png
+    - assets/onboarding4.png
 
   fonts:
     - family: GT Ultra
