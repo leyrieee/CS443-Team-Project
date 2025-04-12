@@ -1,9 +1,37 @@
 import "package:flutter/material.dart";
+import '../services/auth_service.dart';
 import 'signup.dart';
 import 'home.dart';
 
-class LoginPage extends StatelessWidget {
+AuthService authService = AuthService();
+
+class LoginPage extends StatefulWidget { // ✅ Changed to StatefulWidget
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState(); // ✅
+}
+
+class _LoginPageState extends State<LoginPage> { // ✅
+  final TextEditingController emailController = TextEditingController(); // ✅
+  final TextEditingController passwordController = TextEditingController(); // ✅
+
+  void _login() async { // ✅
+    String email = emailController.text.trim(); // ✅
+    String password = passwordController.text.trim(); // ✅
+
+    try {
+      await authService.signIn(email, password); // ✅
+      Navigator.pushReplacement( // ✅
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()), // ✅
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar( // ✅
+        SnackBar(content: Text("Login failed: $e")), // ✅
+      );
+    }
+  } // ✅
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +70,9 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            buildTextField('Email'),
+            buildTextField('Email', controller: emailController), // ✅
             const SizedBox(height: 10),
-            buildTextField('Password', obscureText: true),
+            buildTextField('Password', obscureText: true, controller: passwordController), // ✅
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -56,16 +84,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            buildPrimaryButton('Login', () {
-              // Login button
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-              );
-            }),
+            buildPrimaryButton('Login', _login), // ✅
             const SizedBox(height: 20),
-
-            // Sign-Up Option with Clickable "Sign up" Link
             Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -102,8 +122,9 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget buildTextField(String hint, {bool obscureText = false}) {
+  Widget buildTextField(String hint, {bool obscureText = false, TextEditingController? controller}) { // ✅
     return TextField(
+      controller: controller, // ✅
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hint,
