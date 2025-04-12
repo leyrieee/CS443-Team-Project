@@ -1,4 +1,9 @@
+import 'package:catchafire/screens/discover.dart';
+import 'package:catchafire/screens/search.dart';
 import 'package:flutter/material.dart';
+import 'profile.dart';
+import 'event_details.dart';
+import 'post.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,76 +14,43 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final ScrollController _scrollController = ScrollController();
+
+  final List<Widget> _screens = [
+    HomeContent(),
+    SearchPage(),
+    const SizedBox.shrink(), // middle FAB button — skip
+    DiscoverPage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(244, 242, 230, 1),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(context),
-            Expanded(
-              child: ListView(
-                controller: _scrollController,
-                padding: const EdgeInsets.only(bottom: 80),
-                children: [
-                  _buildWelcomeSection(),
-                  _buildEventCard(
-                    image: 'assets/community_garden.jpeg',
-                    title: 'Community Garden Cleanup',
-                    organization: 'Green City Initiative',
-                    location: 'Central Park, NY',
-                    date: 'April 15, 2025',
-                    skills: ['Gardening', 'Physical labor'],
-                  ),
-                  _buildEventCard(
-                    image: 'assets/teach_coding.jpeg',
-                    title: 'Teach Coding to Kids',
-                    organization: 'Tech for All',
-                    location: 'Downtown Library',
-                    date: 'April 18, 2025',
-                    skills: ['Programming', 'Teaching'],
-                  ),
-                  _buildEventCard(
-                    image: 'assets/food_drive.jpeg',
-                    title: 'Food Drive Volunteers',
-                    organization: 'Food for Families',
-                    location: 'Community Center',
-                    date: 'April 22, 2025',
-                    skills: ['Organization', 'Communication'],
-                  ),
-                  _buildEventCard(
-                    image: 'assets/elderly_care.jpeg',
-                    title: 'Elderly Care Assistance',
-                    organization: 'Golden Years Foundation',
-                    location: 'Sunset Homes',
-                    date: 'April 25, 2025',
-                    skills: ['Healthcare', 'Compassion'],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: SafeArea(child: _screens[_currentIndex]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Color.fromRGBO(41, 37, 37, 1),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PostPage()),
+          );
+        },
+        backgroundColor: const Color.fromRGBO(41, 37, 37, 1),
         foregroundColor: Colors.white,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(244, 242, 230, 1),
+        backgroundColor: const Color.fromRGBO(244, 242, 230, 1),
         currentIndex: _currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          if (index != 2) {
+            setState(() {
+              _currentIndex = index;
+            });
+          }
         },
-        selectedItemColor: Color.fromRGBO(41, 37, 37, 1),
+        selectedItemColor: const Color.fromRGBO(41, 37, 37, 1),
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -108,19 +80,76 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+}
 
-  Widget _buildHeader(BuildContext context) {
+class HomeContent extends StatelessWidget {
+  final ScrollController _scrollController = ScrollController();
+
+  HomeContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildHeader(),
+        Expanded(
+          child: ListView(
+            controller: _scrollController,
+            padding: const EdgeInsets.only(bottom: 80),
+            children: [
+              _buildWelcomeSection(),
+              _buildEventCard(
+                context,
+                image: 'assets/community_garden.jpeg',
+                title: 'Community Garden Cleanup',
+                organization: 'Green City Initiative',
+                location: 'Central Park, NY',
+                date: 'April 15, 2025',
+                skills: ['Gardening', 'Physical labor'],
+              ),
+              _buildEventCard(
+                context,
+                image: 'assets/teach_coding.jpeg',
+                title: 'Teach Coding to Kids',
+                organization: 'Tech for All',
+                location: 'Downtown Library',
+                date: 'April 18, 2025',
+                skills: ['Programming', 'Teaching'],
+              ),
+              _buildEventCard(
+                context,
+                image: 'assets/food_drive.jpeg',
+                title: 'Food Drive Volunteers',
+                organization: 'Food for Families',
+                location: 'Community Center',
+                date: 'April 22, 2025',
+                skills: ['Organization', 'Communication'],
+              ),
+              _buildEventCard(
+                context,
+                image: 'assets/elderly_care.jpeg',
+                title: 'Elderly Care Assistance',
+                organization: 'Golden Years Foundation',
+                location: 'Sunset Homes',
+                date: 'April 25, 2025',
+                skills: ['Healthcare', 'Compassion'],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            'assets/logo.png',
-            width: 120,
-          ),
+          Image.asset('assets/logo.png', width: 120),
           const CircleAvatar(
-            backgroundColor: Colors.grey,
+            backgroundColor: Color.fromRGBO(41, 37, 37, 1),
             radius: 18,
             child:
                 Icon(Icons.notifications_none, color: Colors.white, size: 20),
@@ -131,13 +160,13 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _buildWelcomeSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
-            'Hello, Maya 👋', //future update, first word of what is entered in first name field
+            'Hello, Maya 👋',
             style: TextStyle(
                 fontFamily: 'GT Ultra',
                 fontSize: 26,
@@ -155,7 +184,8 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildEventCard({
+  Widget _buildEventCard(
+    BuildContext context, {
     required String image,
     required String title,
     required String organization,
@@ -168,8 +198,7 @@ class HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventDetailPage(eventTitle: title),
-          ),
+              builder: (context) => EventDetailPage(eventTitle: title)),
         );
       },
       child: Container(
@@ -179,10 +208,7 @@ class HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 12,
-              offset: Offset(0, 6),
-            ),
+                color: Colors.black12, blurRadius: 12, offset: Offset(0, 6)),
           ],
         ),
         child: Column(
@@ -191,19 +217,15 @@ class HomePageState extends State<HomePage> {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
-              child: Image.asset(
-                image,
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset(image,
+                  height: 180, width: double.infinity, fit: BoxFit.cover),
             ),
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromRGBO(41, 37, 37, 1),
                 borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(20)),
+                    BorderRadius.vertical(bottom: Radius.circular(20)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +265,8 @@ class HomePageState extends State<HomePage> {
                     children: skills
                         .map((skill) => Chip(
                               label: Text(skill),
-                              backgroundColor: Color.fromRGBO(244, 242, 230, 1),
+                              backgroundColor:
+                                  const Color.fromRGBO(244, 242, 230, 1),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: BorderSide.none,
@@ -256,22 +279,6 @@ class HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class EventDetailPage extends StatelessWidget {
-  final String eventTitle;
-
-  const EventDetailPage({super.key, required this.eventTitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(eventTitle)),
-      body: Center(
-        child: Text('More details about $eventTitle'),
       ),
     );
   }

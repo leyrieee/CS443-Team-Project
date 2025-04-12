@@ -1,6 +1,5 @@
-import 'package:catchafire/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
-//import 'screens/cause_skills.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const CatchafireApp());
