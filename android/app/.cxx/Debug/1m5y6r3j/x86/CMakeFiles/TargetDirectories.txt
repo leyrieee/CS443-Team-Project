@@ -1,0 +1,2 @@
+/Users/kwamenaduker/Desktop/CS443-Team-Project-main/android/app/.cxx/Debug/1m5y6r3j/x86/CMakeFiles/edit_cache.dir
+/Users/kwamenaduker/Desktop/CS443-Team-Project-main/android/app/.cxx/Debug/1m5y6r3j/x86/CMakeFiles/rebuild_cache.dir
